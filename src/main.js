@@ -4,7 +4,9 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 // required style for leaflet map plugin
-import 'leaflet/dist/leaflet.css';
+import 'leaflet/dist/leaflet.css'
+// import main css
+import './assets/css/index.css'
 
 const app = createApp(App)
 
