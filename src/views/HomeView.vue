@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div style="height:600px; width:800px">
+    <div v-if="headerHeight" :style="{ height: `calc(100vh - ${ headerHeight }px`}" class="w-full">
       <l-map ref="map" v-model:zoom="zoom" :center="center" :use-global-leaflet="false">
         <l-tile-layer
             layer-type="base"
@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      zoom: 16,
+      zoom: 18,
       center: [47.313220, -1.319482],
       markers: [
         {
@@ -35,8 +35,12 @@ export default {
         {
           latLng: [47.314210, -1.319462]
         },
-      ]
+      ],
+      headerHeight: null
     };
   },
+  created() {
+    this.headerHeight = document.querySelector('header').clientHeight;
+  }
 };
 </script>
