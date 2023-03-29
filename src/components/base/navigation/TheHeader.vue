@@ -2,7 +2,7 @@
   <header class="container px-5 py-4 shadow-md">
     <nav class="flex items-center justify-between">
       <RouterLink to="/">
-        <img alt="Logo" class="w-32" src="/ParkIn Logo.png">
+        <img alt="Logo" class="w-32" src="/src/assets/logo.png">
       </RouterLink>
 
       <ul class="flex">
