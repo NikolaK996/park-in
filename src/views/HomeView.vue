@@ -1,6 +1,7 @@
 <template>
   <main>
-    <div v-if="headerHeight" :style="{ height: `calc(100vh - ${ headerHeight }px`}" class="w-full">
+    <div v-if="headerHeight" :style="{ height: `calc(100vh - ${ headerHeight }px`}" class="relative w-full">
+      <input class="absolute" type="text"/>
       <l-map ref="map" v-model:zoom="zoom" :center="center" :use-global-leaflet="false">
         <l-tile-layer
             layer-type="base"
