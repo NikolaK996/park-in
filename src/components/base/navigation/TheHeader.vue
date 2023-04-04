@@ -1,27 +1,44 @@
 <template>
-  <header class="container px-5 py-4 shadow-md">
+  <header class=" px-5 py-4 shadow-md">
     <nav class="flex items-center justify-between">
       <RouterLink to="/">
         <img alt="Logo" class="w-32" src="/src/assets/logo.png">
       </RouterLink>
 
-      <ul class="flex">
-        <li class="mr-4 py-3 px-1">
-          <RouterLink class="font-semibold hover:underline text-primary" to="/">Home</RouterLink>
-        </li>
-        <li class="py-3 px-1">
-          <RouterLink class="font-semibold hover:underline text-primary" to="/about">About</RouterLink>
-        </li>
-      </ul>
+      <TheHeaderLinks/>
+      <IconsHamburger class="cursor-pointer" @click="mobileMenuVisible = !mobileMenuVisible"/>
+
+      <TheHeaderLinks v-if="mobileMenuVisible" class="mobile-menu absolute w-full h-64 left-0 bg-red-400"/>
     </nav>
   </header>
 </template>
 
-<script setup>
-import {RouterLink} from 'vue-router'</script>
+<script>
+import {RouterLink} from 'vue-router'
+import IconsHamburger from "@/components/base/icons/IconsHamburger.vue"
+import TheHeaderLinks from "@/components/base/navigation/TheHeaderLinks.vue";
+
+export default {
+  components: {
+    TheHeaderLinks,
+    RouterLink,
+    IconsHamburger
+  },
+  data() {
+    return {
+      mobileMenuVisible: false
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 .router-link-active {
   color: black !important;
+}
+
+.mobile-menu {
+  top: 80px;
+  z-index: 2000;
 }
 </style>

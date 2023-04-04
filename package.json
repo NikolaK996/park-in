@@ -13,11 +13,13 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@mdi/js": "^7.2.96",
     "@vue-leaflet/vue-leaflet": "^0.9.0",
     "leaflet": "^1.9.3",
     "pinia": "^2.0.32",
     "vue": "^3.2.47",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vue3-icon": "^2.1.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
