@@ -1,19 +1,12 @@
 <template>
-  <InputSearch @search="searchHandler" />
+  <InputOpenAI />
 </template>
 
 <script>
-import InputSearch from '@/components/base/inputs/InputSearch.vue'
-// import { useMapStore } from '@/stores/counter'
-// const { searchTerm } = useMapStore()
+import InputOpenAI from '@/components/base/inputs/InputOpenAI.vue'
 
 export default {
-  components: { InputSearch },
-  data() {
-    return {
-      searchTerm: ''
-    }
-  },
+  components: { InputOpenAI },
   methods: {
     searchHandler() {
       // TODO handle the search
