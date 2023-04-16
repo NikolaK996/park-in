@@ -6,16 +6,21 @@
     <li class="py-3 px-1">
       <RouterLink class="font-semibold hover:underline text-primary" to="/about">About</RouterLink>
     </li>
+    <li class="py-3 px-1">
+      <a
+        class="font-semibold hover:underline text-primary ml-4 cursor-pointer"
+        @click="authStore.toggleLogin()"
+      >
+        Login
+      </a>
+    </li>
   </ul>
 </template>
 
-<script>
+<script setup>
+import { useAuthStore } from '@/stores/auth'
 
-export default {
-  name: "TheHeaderLinks"
-}
+const authStore = useAuthStore()
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
