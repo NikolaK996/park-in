@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <LoginModal />
+    <RegistrationModal v-if="authStore.showRegistrationForm" />
+    <LoginModal v-if="authStore.showLoginForm" />
     <TheHeader />
     <RouterView></RouterView>
   </div>
@@ -10,4 +11,8 @@
 import LoginModal from './components/sections/login/LoginModal.vue'
 import TheHeader from '@/components/base/navigation/TheHeader.vue'
 import { RouterView } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+import RegistrationModal from '@/components/sections/registration/RegisterModal.vue'
+
+const authStore = useAuthStore()
 </script>

@@ -9,7 +9,7 @@
     <li class="py-3 px-1">
       <a
         class="font-semibold hover:underline text-primary ml-4 cursor-pointer"
-        @click="authStore.toggleLogin()"
+        @click="authStore.openLoginModal()"
       >
         Login
       </a>

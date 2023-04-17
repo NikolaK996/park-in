@@ -1,5 +1,5 @@
 <template>
-  <ModalContainer v-if="authStore.showLoginForm" @close="authStore.toggleLogin()">
+  <ModalContainer @close="authStore.closeLoginModal()">
     <div class="p-8">
       <h2 class="text-xl mb-4">Login</h2>
 
