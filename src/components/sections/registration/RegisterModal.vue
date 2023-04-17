@@ -1,7 +1,7 @@
 <template>
   <ModalContainer @close="authStore.closeRegistrationModal()">
-    <div class="p-8">
-      <h2 class="text-xl mb-4">Registration</h2>
+    <div class="p-12">
+      <h2 class="text-2xl mb-4">Registration</h2>
 
       <RegistrationForm @submit="register" />
     </div>
