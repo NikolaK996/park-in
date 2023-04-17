@@ -1,5 +1,7 @@
 <template>
-  <input-search @search="submit" />
+  <div class="relative">
+    <input-search enable-voice-search @search="submit" />
+  </div>
 
   <span>
     {{ answer }}
@@ -24,6 +26,10 @@ export default defineComponent({
     const image = ref('')
     const answer = ref('')
     const submit = async (searchedValue) => {
+      if (!searchedValue) {
+        return
+      }
+
       try {
         const { data } = await openai.createCompletion({
           model: 'text-davinci-003',
