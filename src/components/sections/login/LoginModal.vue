@@ -1,7 +1,7 @@
 <template>
   <ModalContainer @close="authStore.closeLoginModal()">
-    <div class="p-8">
-      <h2 class="text-xl mb-4">Login</h2>
+    <div class="p-12">
+      <h2 class="text-2xl mb-4">Login</h2>
 
       <LoginForm @submit="login" />
     </div>
