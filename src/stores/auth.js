@@ -5,17 +5,25 @@ export const useAuthStore = defineStore('auth', () => {
   const showLoginForm = ref(false)
   const showRegistrationForm = ref(false)
 
-  const toggleLogin = () => {
-    showLoginForm.value = !showLoginForm.value
+  const openLoginModal = () => {
+    showLoginForm.value = true
   }
-  const toggleRegistration = () => {
-    showRegistrationForm.value = !showRegistrationForm.value
+  const closeLoginModal = () => {
+    showLoginForm.value = false
+  }
+  const openRegistrationModal = () => {
+    showRegistrationForm.value = true
+  }
+  const closeRegistrationModal = () => {
+    showRegistrationForm.value = false
   }
 
   return {
     showLoginForm,
     showRegistrationForm,
-    toggleLogin,
-    toggleRegistration
+    openLoginModal,
+    closeLoginModal,
+    openRegistrationModal,
+    closeRegistrationModal
   }
 })

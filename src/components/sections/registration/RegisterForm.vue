@@ -8,13 +8,26 @@
       <label class="text-sm" for="password">Password:</label>
       <input id="password" v-model="password" class="text-sm" required type="password" />
     </div>
-
-    <button type="submit">Login</button>
+    <div class="input-group mb-2">
+      <label class="text-sm" for="user-type">User Type:</label>
+      <select id="user-type" v-model="userType" class="text-sm" required>
+        <option value="">Select User Type</option>
+        <option value="private">Private Charging Spot</option>
+        <option value="distributor">Electricity Distributor</option>
+        <option value="public">Public Charging Spot</option>
+      </select>
+    </div>
+    <div class="input-group mb-2">
+      <label class="text-sm" for="name">Name:</label>
+      <input id="name" v-model="name" class="text-sm" required type="text" />
+    </div>
+    <button type="submit">Register</button>
     <a
       class="block text-center cursor-pointer hover:text-primary underline text-sm mt-4"
-      @click="switchToRegisterModal"
-      >Registration</a
+      @click="switchToLoginModal"
     >
+      Login
+    </a>
   </form>
 </template>
 
@@ -27,18 +40,20 @@ const emits = defineEmits(['submit'])
 
 const email = ref('')
 const password = ref('')
+const userType = ref('')
+const name = ref('')
 
-const switchToRegisterModal = () => {
-  authStore.closeLoginModal()
-  authStore.openRegistrationModal()
+const switchToLoginModal = () => {
+  authStore.closeRegistrationModal()
+  authStore.openLoginModal()
 }
 const submitHandler = () => {
-  emits('submit', email.value, password.value)
+  emits('submit', email.value, password.value, userType.value, name.value)
 }
 </script>
 
 <style scoped>
-.login-container {
+.register-container {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
@@ -50,7 +65,8 @@ const submitHandler = () => {
   display: block;
 }
 
-.input-group input {
+.input-group input,
+.input-group select {
   width: 100%;
   padding: 8px 10px;
   border: 1px solid #ccc;
