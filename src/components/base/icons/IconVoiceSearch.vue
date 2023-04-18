@@ -1,5 +1,5 @@
 <template>
-  <svg-icon :path="mdiMicrophone" :size="40" type="mdi" />
+  <svg-icon :path="mdiMicrophone" :size="30" type="mdi" />
 </template>
 
 <script setup>
