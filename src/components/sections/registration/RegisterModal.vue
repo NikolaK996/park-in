@@ -12,7 +12,7 @@
 import ModalContainer from '@/components/base/modal/ModalContainer.vue'
 import RegistrationForm from '@/components/sections/registration/RegisterForm.vue'
 
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '@/stores/auth/auth'
 
 function register(name, email, password, userType) {
   // TODO: Implement your registration logic here

@@ -1,8 +1,8 @@
 <template>
-  <svg-icon :path="mdiMenu" type="mdi" />
+  <svg-icon :path="mdiClose" type="mdi" />
 </template>
 
 <script setup>
 import SvgIcon from 'vue3-icon'
-import { mdiMenu } from '@mdi/js'
+import { mdiClose } from '@mdi/js'
 </script>

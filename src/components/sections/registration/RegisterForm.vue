@@ -35,7 +35,7 @@
 
 <script setup>
 import { defineEmits, ref } from 'vue'
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '@/stores/auth/auth'
 
 const authStore = useAuthStore()
 const emits = defineEmits(['submit'])
