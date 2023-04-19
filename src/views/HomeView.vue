@@ -1,57 +1,81 @@
 <template>
-  <main>
-    <div
-      v-if="headerHeight"
-      :style="{ height: `calc(100vh - ${headerHeight}px` }"
-      class="relative w-full"
-    >
-      <map-search />
-      <l-map ref="map" v-model:zoom="zoom" :center="center" :use-global-leaflet="false">
-        <l-tile-layer
-          layer-type="base"
-          name="OpenStreetMap"
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <map-location-marker
-          v-for="(marker, index) in markers"
-          :key="index"
-          :lat-lng="marker.latLng"
-        />
-      </l-map>
-    </div>
-  </main>
+  <div class="flex">
+    <main class="flex-1">
+      <div
+        v-if="headerHeight"
+        :style="{ height: `calc(100vh - ${headerHeight}px` }"
+        class="relative w-full flex flex-col"
+      >
+        <map-search />
+        <div class="absolute map-sidebar-wrapper top-24 left-20 z-2">
+          <MapSidebar />
+        </div>
+        <l-map ref="mapDOM" :center="[47.31322, -1.319482]" :zoom="zoom" @ready="initMap">
+          <l-control>
+            <button
+              class="p-2 bg-white border border-gray-200 hover:bg-gray-50 rounded-md shadow-md"
+              @click="setUserCurrentLocation"
+            >
+              <IconMarker />
+            </button>
+          </l-control>
+          <l-tile-layer
+            layer-type="base"
+            name="OpenStreetMap"
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <map-location-marker
+            v-for="(location, index) in mapStore.locations"
+            :key="index"
+            :location="location"
+          />
+        </l-map>
+      </div>
+    </main>
+  </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue'
 import 'leaflet/dist/leaflet.css'
-import { LMap, LTileLayer } from '@vue-leaflet/vue-leaflet'
+import { LControl, LMap, LTileLayer } from '@vue-leaflet/vue-leaflet'
 import MapLocationMarker from '@/components/base/map/MapLocationMarker.vue'
 import MapSearch from '@/components/base/map/MapSearch.vue'
+import MapSidebar from '@/components/base/map/MapSidebar.vue'
+import IconMarker from '@/components/base/icons/IconsMarker.vue'
+import { useMapStore } from '@/stores/map/map'
 
-export default {
-  components: {
-    MapSearch,
-    LMap,
-    LTileLayer,
-    MapLocationMarker
-  },
-  data() {
-    return {
-      zoom: 18,
-      center: [47.31322, -1.319482],
-      markers: [
-        {
-          latLng: [47.31322, -1.319482]
-        },
-        {
-          latLng: [47.31421, -1.319462]
-        }
-      ],
-      headerHeight: null
-    }
-  },
-  created() {
-    this.headerHeight = document.querySelector('header').clientHeight
+const mapStore = useMapStore()
+const zoom = ref(18)
+
+let headerHeight = null
+const mapDOM = ref(null)
+
+function setHeaderHeight() {
+  headerHeight = document.querySelector('header').clientHeight
+}
+
+function setUserCurrentLocation() {
+  const currentLocation = mapStore.currentLocation
+  console.log(currentLocation)
+
+  if (currentLocation) {
+    mapDOM.value.leafletObject.setView(currentLocation)
+    console.log(mapDOM)
   }
 }
+
+setHeaderHeight()
+
+async function initMap() {
+  setUserCurrentLocation()
+  mapStore.mapDOM = mapDOM.value
+  mapStore.fetchLocations()
+}
 </script>
+
+<style lang="scss" scoped>
+.map-sidebar-wrapper {
+  height: calc(100vh - 15rem);
+}
+</style>

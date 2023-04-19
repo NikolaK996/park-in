@@ -12,7 +12,7 @@
 import ModalContainer from '@/components/base/modal/ModalContainer.vue'
 import LoginForm from '@/components/sections/login/LoginForm.vue'
 
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '@/stores/auth/auth'
 
 function login(email, password) {
   // TODO: Implement your login logic here

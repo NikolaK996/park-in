@@ -5,49 +5,66 @@
         <img alt="Logo" class="w-32" src="/src/assets/logo.png" />
       </RouterLink>
 
-      <TheHeaderLinks />
-      <IconsHamburger class="cursor-pointer" @click="mobileMenuVisible = !mobileMenuVisible" />
-
-      <TheHeaderLinks
-        v-if="mobileMenuVisible"
-        class="mobile-menu absolute w-full h-64 left-0 bg-red-400"
+      <TheHeaderLinks class="sm:visible invisible" />
+      <IconsHamburger
+        v-if="!mobileMenuVisible"
+        class="w-[3rem] h-[3rem] p-2 cursor-pointer z-4"
+        @click="mobileMenuVisible = !mobileMenuVisible"
+      />
+      <IconsClose
+        v-else
+        class="text-white w-[3rem] h-[3rem] cursor-pointer p-2 z-4"
+        @click="mobileMenuVisible = !mobileMenuVisible"
       />
     </nav>
+
+    <transition name="fade">
+      <TheHeaderLinks
+        v-show="mobileMenuVisible"
+        class="sm:visible invisible z-3 fixed flex flex-col items-center justify-center text-2xl w-screen h-screen top-0 left-0 text-white bg-primary opacity-90 backdrop-blur-sm"
+        @changed="mobileMenuVisible = false"
+      />
+    </transition>
   </header>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import IconsHamburger from '@/components/base/icons/IconsHamburger.vue'
+import IconsClose from '@/components/base/icons/IconsClose.vue'
 import TheHeaderLinks from '@/components/base/navigation/TheHeaderLinks.vue'
 
-export default {
-  components: {
-    TheHeaderLinks,
-    RouterLink,
-    IconsHamburger
-  },
-  data() {
-    return {
-      mobileMenuVisible: false
-    }
-  }
-}
+const mobileMenuVisible = ref(false)
 </script>
 
 <style lang="scss">
-.router-link-active {
-  color: #165b16 !important;
-}
-
 header {
   background-color: #f5f1f1;
 }
 
-.flex items-center justify-between {
-  background-color: #fcfbfb;
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
 
-  z-index: 2000;
+.fade-enter-from {
+  opacity: 0;
+  transform: translateY(-100%) scale(0.5);
+}
+
+.fade-enter-to {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.fade-leave-from {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(100%) scale(0.5);
 }
 </style>
-.mobile-menu { top: 80px;

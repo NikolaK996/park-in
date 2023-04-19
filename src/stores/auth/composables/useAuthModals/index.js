@@ -1,20 +1,22 @@
 import { ref } from 'vue'
-import { defineStore } from 'pinia'
 
-export const useAuthStore = defineStore('auth', () => {
+export function useAuthModals() {
   const showLoginForm = ref(false)
   const showRegistrationForm = ref(false)
 
-  const openLoginModal = () => {
+  function openLoginModal() {
     showLoginForm.value = true
   }
-  const closeLoginModal = () => {
+
+  function closeLoginModal() {
     showLoginForm.value = false
   }
-  const openRegistrationModal = () => {
+
+  function openRegistrationModal() {
     showRegistrationForm.value = true
   }
-  const closeRegistrationModal = () => {
+
+  function closeRegistrationModal() {
     showRegistrationForm.value = false
   }
 
@@ -26,4 +28,4 @@ export const useAuthStore = defineStore('auth', () => {
     openRegistrationModal,
     closeRegistrationModal
   }
-})
+}

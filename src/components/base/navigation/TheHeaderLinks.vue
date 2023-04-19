@@ -1,26 +1,57 @@
 <template>
-  <ul class="flex">
-    <li class="mr-4 py-3 px-1">
-      <RouterLink class="font-semibold hover:underline text-primary" to="/">Home</RouterLink>
+  <ul class="flex text-primary items-center">
+    <li class="mx-2 py-3 px-1">
+      <RouterLink
+        class="font-semibold hover:underline"
+        exact
+        exact-active-class="router-link-active"
+        to="/"
+      >
+        Home
+      </RouterLink>
     </li>
-    <li class="py-3 px-1">
-      <RouterLink class="font-semibold hover:underline text-primary" to="/about">About</RouterLink>
+    <li class="mx-2 py-3 px-1">
+      <RouterLink
+        class="font-semibold hover:underline"
+        exact
+        exact-active-class="router-link-active"
+        to="/about"
+      >
+        About
+      </RouterLink>
     </li>
-    <li class="py-3 px-1">
-      <a
-        class="font-semibold hover:underline text-primary ml-4 cursor-pointer"
+    <li class="mx-2">
+      <button
+        class="font-semibold py-2 px-4 text-primary bg-white shadow-md"
+        type="button"
         @click="authStore.openLoginModal()"
       >
-        Login
-      </a>
+        Sign in
+      </button>
     </li>
   </ul>
 </template>
 
 <script setup>
-import { useAuthStore } from '@/stores/auth'
+import { defineEmits, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { useAuthStore } from '@/stores/auth/auth'
 
+const emits = defineEmits(['changed'])
+const route = useRoute()
 const authStore = useAuthStore()
+
+watch(
+  () => route,
+  () => {
+    emits('changed')
+  },
+  { deep: true }
+)
 </script>
 
-<style scoped></style>
+<style scoped>
+.router-link-active {
+  text-decoration: underline !important;
+}
+</style>

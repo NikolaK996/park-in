@@ -11,7 +11,7 @@
 import LoginModal from './components/sections/login/LoginModal.vue'
 import TheHeader from '@/components/base/navigation/TheHeader.vue'
 import { RouterView } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '@/stores/auth/auth'
 import RegistrationModal from '@/components/sections/registration/RegisterModal.vue'
 
 const authStore = useAuthStore()

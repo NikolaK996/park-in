@@ -5,6 +5,13 @@ module.exports = {
     extend: {
       colors: {
         primary: '#006D5B'
+      },
+      zIndex: {
+        1: '10001',
+        2: '10002',
+        3: '10003',
+        4: '10004',
+        5: '10005'
       }
     }
   },
