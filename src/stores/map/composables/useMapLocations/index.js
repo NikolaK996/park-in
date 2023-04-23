@@ -25,7 +25,7 @@ export function useMapLocations() {
       const { data } = await axios.get('https://api.openchargemap.io/v3/poi', {
         params: {
           output: 'json',
-          maxresults: 2,
+          maxresults: 10,
           key: import.meta.env.VITE_OPEN_LOCATIONS_API_KEY,
           longitude: currentLocation.value[1],
           latitude: currentLocation.value[0]
