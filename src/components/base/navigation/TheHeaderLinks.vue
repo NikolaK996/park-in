@@ -15,6 +15,16 @@
         class="font-semibold hover:underline"
         exact
         exact-active-class="router-link-active"
+        to="/map"
+      >
+        Map
+      </RouterLink>
+    </li>
+    <li class="mx-2 py-3 px-1">
+      <RouterLink
+        class="font-semibold hover:underline"
+        exact
+        exact-active-class="router-link-active"
         to="/about"
       >
         About
