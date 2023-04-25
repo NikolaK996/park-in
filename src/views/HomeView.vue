@@ -1,7 +1,7 @@
 <template>
   <div class="landing-page">
     <div class="hero-section">
-      <img alt="Electric Car" class="hero-image" src="src/assets/electric-car.jpg" />
+      <img alt="Electric Car" class="hero-image" src="/src/assets/electric-car.jpg" />
       <div class="hero-text">
         <h1 class="hero-title">Find Electric Car Chargers Near You</h1>
         <p class="hero-subtitle">
@@ -22,7 +22,7 @@
           use. It's a win-win for everyone!
         </p>
       </div>
-      <img alt="Charging Station" class="main-image" src="src/assets/electric-charger.jpg" />
+      <img alt="Charging Station" class="main-image" src="/src/assets/electric-charger.jpg" />
     </div>
   </div>
 </template>
