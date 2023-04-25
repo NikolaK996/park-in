@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <InputOpenAI />
-  </div>
+  <InputOpenAI />
 </template>
 
 <script>

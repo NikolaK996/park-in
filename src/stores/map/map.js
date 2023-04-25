@@ -5,10 +5,10 @@ import { useMapLocations } from '@/stores/map/composables/useMapLocations'
 import { useMapLeaflet } from '@/stores/map/composables/useMapLeaflet'
 
 export const useMapStore = defineStore('counter', () => {
-  const { mapDOM } = useMapLeaflet()
+  const { mapDOM, setMapDOM } = useMapLeaflet()
   const { searchTerm, search } = useMapSearch()
   const { sideBarVisible, toggleSidebar } = useMapSidebar()
-  const { locations, currentLocation, resetLocationsActiveState, fetchLocations } =
+  const { locations, currentLocation, fetching, resetLocationsActiveState, fetchLocations } =
     useMapLocations()
 
   return {
@@ -17,9 +17,11 @@ export const useMapStore = defineStore('counter', () => {
     locations,
     sideBarVisible,
     currentLocation,
+    fetching,
     search,
     toggleSidebar,
     resetLocationsActiveState,
-    fetchLocations
+    fetchLocations,
+    setMapDOM
   }
 })
