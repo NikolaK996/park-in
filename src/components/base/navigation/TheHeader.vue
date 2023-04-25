@@ -5,15 +5,15 @@
         <img alt="Logo" class="w-32" src="/src/assets/logo.png" />
       </RouterLink>
 
-      <TheHeaderLinks class="sm:visible invisible" />
+      <TheHeaderLinks class="sm:flex hidden" />
       <IconsHamburger
         v-if="!mobileMenuVisible"
-        class="w-[3rem] h-[3rem] p-2 cursor-pointer z-4"
+        class="w-[3rem] h-[3rem] p-2 cursor-pointer z-5"
         @click="mobileMenuVisible = !mobileMenuVisible"
       />
       <IconsClose
         v-else
-        class="text-white w-[3rem] h-[3rem] cursor-pointer p-2 z-4"
+        class="text-white w-[3rem] h-[3rem] cursor-pointer p-2 z-5"
         @click="mobileMenuVisible = !mobileMenuVisible"
       />
     </nav>
@@ -21,7 +21,7 @@
     <transition name="fade">
       <TheHeaderLinks
         v-show="mobileMenuVisible"
-        class="sm:visible invisible z-3 fixed flex flex-col items-center justify-center text-2xl w-screen h-screen top-0 left-0 text-white bg-primary opacity-90 backdrop-blur-sm"
+        class="z-4 fixed flex flex-col items-center justify-center text-2xl w-screen h-screen top-0 left-0 text-white bg-primary opacity-90 backdrop-blur-sm"
         @changed="mobileMenuVisible = false"
       />
     </transition>

@@ -6,7 +6,6 @@ export function useMapLocations() {
   const locations = ref([])
   const { coords, error } = useGeolocation()
   const currentLocation = computed(() => {
-    coords.value
     if (
       !error.value &&
       coords.value.longitude !== Infinity &&
@@ -19,28 +18,34 @@ export function useMapLocations() {
 
     return null
   })
+  const fetching = ref(false)
 
   async function fetchLocations() {
     try {
-      const { data } = await axios.get('https://api.openchargemap.io/v3/poi', {
-        params: {
-          output: 'json',
-          maxresults: 10,
-          key: import.meta.env.VITE_OPEN_LOCATIONS_API_KEY,
-          longitude: currentLocation.value[1],
-          latitude: currentLocation.value[0]
-        }
-      })
+      fetching.value = true
+      if (currentLocation.value) {
+        const { data } = await axios.get('https://api.openchargemap.io/v3/poi', {
+          params: {
+            output: 'json',
+            maxresults: 15,
+            key: import.meta.env.VITE_OPEN_LOCATIONS_API_KEY,
+            longitude: currentLocation.value[1],
+            latitude: currentLocation.value[0]
+          }
+        })
 
-      locations.value = data.map((item) => ({
-        name: item.AddressInfo.Title,
-        address: '',
-        latLng: [item.AddressInfo.Latitude, item.AddressInfo.Longitude],
-        status: 'Available',
-        active: false
-      }))
+        locations.value = data.map((item) => ({
+          name: item.AddressInfo.Title,
+          address: '',
+          latLng: [item.AddressInfo.Latitude, item.AddressInfo.Longitude],
+          status: 'Available',
+          active: false
+        }))
+      }
     } catch (error) {
       console.warn(error)
+    } finally {
+      fetching.value = false
     }
   }
 
@@ -53,6 +58,7 @@ export function useMapLocations() {
   return {
     locations,
     currentLocation,
+    fetching,
     resetLocationsActiveState,
     fetchLocations
   }

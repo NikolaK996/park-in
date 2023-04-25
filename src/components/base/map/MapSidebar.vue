@@ -1,5 +1,5 @@
 <template>
-  <div v-if="mapStore.locations.length > 0" class="map-sidebar w-1/4 h-full box-">
+  <div v-if="mapStore.locations.length > 0" class="map-sidebar h-full shadow-xl">
     <div class="p-2 w-full h-full bg-white/[.5] backdrop-blur-sm overflow-auto">
       <h2 class="text-lg font-bold mb-2">Charging Spots</h2>
       <ul class="divide-y divide-gray-400">
@@ -37,15 +37,7 @@ const mapStore = useMapStore()
 
 function showLocation(location) {
   mapStore.resetLocationsActiveState()
-  console.log(mapStore.mapDOM)
   mapStore.mapDOM.leafletObject.setView(location.latLng)
   location.active = true
 }
 </script>
-
-<style lang="scss" scoped>
-.map-sidebar {
-  min-width: 20rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-</style>

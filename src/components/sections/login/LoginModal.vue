@@ -1,6 +1,6 @@
 <template>
   <ModalContainer @close="authStore.closeLoginModal()">
-    <div class="p-12">
+    <div class="p-12 sm:min-w-[32rem]">
       <h2 class="text-2xl mb-4">Login</h2>
 
       <LoginForm @submit="login" />
