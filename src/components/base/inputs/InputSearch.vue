@@ -1,57 +1,94 @@
 <template>
-  <div class="flex items-center justify-center p-2 bg-gray-50">
-    <input v-model="searchTerm" class="p-2 border-2 border-black w-full sm:w-auto" type="text" />
-    <button class="p-2 my-2 border-2 border-green-700 bg-green-700" @click="search">Search</button>
-    <button v-if="props.enableVoiceSearch" class="ml-4" @mousedown="startSpeechRecognition">
-      <icon-voice-search
-        v-if="microphonePermission === 'granted'"
-        :class="{ 'text-green-500': isListening }"
-      />
-      <icon-voice-search-off v-else />
-    </button>
-  </div>
+  <form class="flex items-center justify-center p-2 bg-gray-50" @submit.prevent="search">
+    <div class="relative flex p-2">
+      <div class="relative">
+        <input
+          ref="inputDOM"
+          :value="value"
+          class="p-2 rounded-md border-2 border-black w-full sm:w-auto"
+          placeholder="Search Adress"
+          type="text"
+          @focus="showResults = true"
+          @input="inputHandler"
+        />
+        <icons-search
+          class="absolute top-1 right-1 text-gray-400 cursor-pointer hover:text-primary"
+          @click="iconSearchHandler"
+        />
+      </div>
+
+      <div v-if="showResults" class="absolute top-16 z-3 bg-white shadow-2xl min-w-[18rem]">
+        <template v-if="value && results.length">
+          <ul v-for="(item, index) in results" :key="index">
+            <li
+              class="p-2 cursor-pointer hover:bg-gray-200 border-b-1 border-gray-600 last:border-none"
+              @click="$emit('select', item)"
+            >
+              {{ item.label }}
+            </li>
+          </ul>
+        </template>
+        <template v-else-if="value">
+          <span class="block p-2">No results for location {{ value }}</span>
+        </template>
+      </div>
+    </div>
+    <input-voice v-if="props.enableVoiceSearch" @input="$emit('voice-search', $event)" />
+  </form>
 </template>
 
 <script setup>
-import { defineEmits, defineProps, onMounted, onUnmounted, ref } from 'vue'
-import { usePermission, useSpeechRecognition } from '@vueuse/core'
-import IconVoiceSearch from '@/components/base/icons/IconVoiceSearch.vue'
-import IconVoiceSearchOff from '@/components/base/icons/IconsVoiceSearchOff.vue'
+import IconsSearch from '@/components/base/icons/IconsSearch.vue'
+import InputVoice from '@/components/base/inputs/InputVoice.vue'
+
+import { defineEmits, defineProps, nextTick, ref } from 'vue'
+import { onClickOutside, useDebounceFn } from '@vueuse/core'
 
 const props = defineProps({
+  value: {
+    type: String,
+    required: true
+  },
+  results: {
+    type: Array,
+    required: true
+  },
   enableVoiceSearch: {
     type: Boolean,
     required: false,
     default: false
+  },
+  autoComplete: {
+    type: Boolean,
+    required: false,
+    default: true
   }
 })
+const emits = defineEmits(['input', 'select', 'search', 'voice-search'])
 
-const emits = defineEmits(['search'])
+const inputDOM = ref(null)
+const showResults = ref(false)
 
-const searchTerm = ref('')
-const { isSupported, isListening, result, start, stop } = useSpeechRecognition()
-const microphonePermission = usePermission('microphone')
+onClickOutside(inputDOM, () => (showResults.value = false))
 
-const search = () => {
-  emits('search', searchTerm.value)
+async function search(value) {
+  emits('search', value)
+  await nextTick()
+  showResults.value = true
 }
-const startSpeechRecognition = () => {
-  if (isSupported) {
-    start()
+
+const autocompleteSearch = useDebounceFn(search, 1000)
+
+function inputHandler(event) {
+  emits('input', event.target.value)
+
+  if (props.autoComplete) {
+    autocompleteSearch(event.target.value)
   }
 }
-const handleVoiceSearch = () => {
-  if (isSupported.value && isListening.value) {
-    stop()
-    emits('search', result.value)
-  }
+
+function iconSearchHandler() {
+  search()
+  inputDOM.value.focus()
 }
-onMounted(() => {
-  document.querySelector('body').addEventListener('mouseup', handleVoiceSearch)
-})
-onUnmounted(() => {
-  document.querySelector('body').removeEventListener('mouseup', handleVoiceSearch)
-})
 </script>
-
-<style scoped></style>

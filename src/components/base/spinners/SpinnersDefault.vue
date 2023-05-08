@@ -1,5 +1,5 @@
 <template>
-  <div class="lds-spinner relative w-[50px] h-[50px] inline-block">
+  <div class="lds-spinner relative w-[30px] h-[30px] inline-block">
     <div></div>
     <div></div>
     <div></div>
@@ -15,11 +15,9 @@
   </div>
 </template>
 
-<script></script>
-
 <style scoped>
 .lds-spinner div {
-  transform-origin: 40px 40px;
+  transform-origin: 15px 15px;
   animation: lds-spinner 1.2s linear infinite;
 }
 
@@ -27,10 +25,10 @@
   content: ' ';
   display: block;
   position: absolute;
-  top: 3px;
-  left: 37px;
-  width: 6px;
-  height: 18px;
+  top: 1px;
+  left: 14px;
+  width: 3px;
+  height: 9px;
   border-radius: 20%;
   background: #000000;
 }

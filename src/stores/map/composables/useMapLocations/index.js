@@ -4,33 +4,40 @@ import axios from 'axios'
 
 export function useMapLocations() {
   const locations = ref([])
-  const { coords, error } = useGeolocation()
-  const currentLocation = computed(() => {
+  const geolocation = useGeolocation()
+  const userGeolocation = computed(() => {
     if (
-      !error.value &&
-      coords.value.longitude !== Infinity &&
-      typeof coords.value.longitude === 'number' &&
-      coords.value.longitude !== Infinity &&
-      typeof coords.value.latitude === 'number'
+      !geolocation.error.value &&
+      geolocation.coords.value.longitude !== Infinity &&
+      typeof geolocation.coords.value.longitude === 'number' &&
+      geolocation.coords.value.longitude !== Infinity &&
+      typeof geolocation.coords.value.latitude === 'number'
     ) {
-      return [coords.value.latitude, coords.value.longitude]
+      return [geolocation.coords.value.latitude, geolocation.coords.value.longitude]
     }
 
     return null
   })
   const fetching = ref(false)
 
-  async function fetchLocations() {
+  /**
+   * @param location - Array[number, number] - Array[longitude, latitude]
+   */
+  async function fetchLocations(location) {
     try {
       fetching.value = true
-      if (currentLocation.value) {
+
+      const longitude = location?.[1] ?? userGeolocation?.value?.[1] ?? null
+      const latitude = location?.[0] ?? userGeolocation?.value?.[0] ?? null
+
+      if (longitude && latitude) {
         const { data } = await axios.get('https://api.openchargemap.io/v3/poi', {
           params: {
+            longitude,
+            latitude,
             output: 'json',
             maxresults: 15,
-            key: import.meta.env.VITE_OPEN_LOCATIONS_API_KEY,
-            longitude: currentLocation.value[1],
-            latitude: currentLocation.value[0]
+            key: import.meta.env.VITE_OPEN_LOCATIONS_API_KEY
           }
         })
 
@@ -57,7 +64,7 @@ export function useMapLocations() {
 
   return {
     locations,
-    currentLocation,
+    userGeolocation,
     fetching,
     resetLocationsActiveState,
     fetchLocations

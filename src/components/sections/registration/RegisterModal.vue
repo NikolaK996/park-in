@@ -14,15 +14,11 @@ import RegistrationForm from '@/components/sections/registration/RegisterForm.vu
 
 import { useAuthStore } from '@/stores/auth/auth'
 
-function register(name, email, password, userType) {
-  // TODO: Implement your registration logic here
-  console.log('Name:', name)
-  console.log('Email:', email)
-  console.log('Password:', password)
-  console.log('User Type:', userType)
-}
-
 const authStore = useAuthStore()
+
+function register({ email, password }) {
+  authStore.register(email, password)
+}
 </script>
 
 <style scoped></style>
