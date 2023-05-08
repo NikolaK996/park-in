@@ -25,8 +25,8 @@
       <button class="px-8 py-4" type="submit">Register</button>
     </div>
     <a
-        class="block text-center cursor-pointer hover:text-primary underline text-sm mt-4"
-        @click="switchToLoginModal"
+      class="block text-center cursor-pointer hover:text-primary underline text-sm mt-4"
+      @click="switchToLoginModal"
     >
       Login
     </a>
@@ -50,7 +50,12 @@ const switchToLoginModal = () => {
   authStore.openLoginModal()
 }
 const submitHandler = () => {
-  emits('submit', email.value, password.value, userType.value, name.value)
+  emits('submit', {
+    email: email.value,
+    password: password.value,
+    userType: userType.value,
+    name: name.value
+  })
 }
 </script>
 

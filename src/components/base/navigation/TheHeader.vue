@@ -21,7 +21,7 @@
     <transition name="fade">
       <TheHeaderLinks
         v-show="mobileMenuVisible"
-        class="z-4 fixed flex flex-col items-center justify-center text-2xl w-screen h-screen top-0 left-0 text-white bg-primary opacity-90 backdrop-blur-sm"
+        class="z-4 fixed flex flex-col items-center justify-center text-2xl w-screen h-screen top-0 left-0 text-white bg-primary bg-opacity-90 backdrop-blur-sm"
         @changed="mobileMenuVisible = false"
       />
     </transition>
@@ -29,13 +29,26 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import IconsHamburger from '@/components/base/icons/IconsHamburger.vue'
 import IconsClose from '@/components/base/icons/IconsClose.vue'
 import TheHeaderLinks from '@/components/base/navigation/TheHeaderLinks.vue'
 
 const mobileMenuVisible = ref(false)
+// watcher that prevents browser scrolling when mobile menu is visible
+watch(
+  () => mobileMenuVisible.value,
+  (value) => {
+    if (value) {
+      document.querySelector('#app').style.overflow = 'hidden' // prevents scrolling on desktop devices
+      document.body.style.overflow = 'hidden' // prevents scrolling on mobile devices
+    } else {
+      document.querySelector('#app').style.overflow = 'auto' // reset back scrolling on desktop devices
+      document.body.style.overflow = 'auto' // reset back scrolling on mobile devices
+    }
+  }
+)
 </script>
 
 <style lang="scss">

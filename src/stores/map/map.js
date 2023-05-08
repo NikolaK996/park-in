@@ -5,23 +5,32 @@ import { useMapLocations } from '@/stores/map/composables/useMapLocations'
 import { useMapLeaflet } from '@/stores/map/composables/useMapLeaflet'
 
 export const useMapStore = defineStore('counter', () => {
-  const { mapDOM, setMapDOM } = useMapLeaflet()
-  const { searchTerm, search } = useMapSearch()
+  const { mapDOM, showResults, setMapDOM, centerMap } = useMapLeaflet()
+  const { searchTerm, searchResults, search } = useMapSearch()
   const { sideBarVisible, toggleSidebar } = useMapSidebar()
-  const { locations, currentLocation, fetching, resetLocationsActiveState, fetchLocations } =
+  const { locations, userGeolocation, fetching, resetLocationsActiveState, fetchLocations } =
     useMapLocations()
+
+  async function searchAddress(location) {
+    centerMap(location)
+    await fetchLocations(location)
+  }
 
   return {
     mapDOM,
+    showResults,
     searchTerm,
+    searchResults,
     locations,
     sideBarVisible,
-    currentLocation,
+    userGeolocation,
     fetching,
     search,
     toggleSidebar,
     resetLocationsActiveState,
     fetchLocations,
-    setMapDOM
+    setMapDOM,
+    centerMap,
+    searchAddress
   }
 })

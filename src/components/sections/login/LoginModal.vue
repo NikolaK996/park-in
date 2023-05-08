@@ -14,13 +14,11 @@ import LoginForm from '@/components/sections/login/LoginForm.vue'
 
 import { useAuthStore } from '@/stores/auth/auth'
 
-function login(email, password) {
-  // TODO: Implement your login logic here
-  console.log('Email:', email)
-  console.log('Password:', password)
-}
-
 const authStore = useAuthStore()
+
+function login(email, password) {
+  authStore.login(email, password)
+}
 </script>
 
 <style scoped></style>

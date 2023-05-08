@@ -8,25 +8,16 @@
       >
         <map-search />
         <div
-          class="absolute map-sidebar-wrapper top-24 left-20 z-2 w-1/4 sm:min-w-[20rem] min-w-[12rem]"
+          v-if="mapStore.showResults"
+          class="absolute map-sidebar-wrapper w-full sm:h-[calc()] sm:w-1/4 bottom-0 sm:bottom-auto sm:top-24 sm:left-20 z-2 sm:min-w-[20rem] min-w-[12rem]"
         >
           <MapSidebar />
         </div>
-        <div
-          v-if="mapStore.fetching"
-          class="absolute w-full h-full flex backdrop-blur-sm items-center justify-center z-3"
-        >
-          <spinners-default />
-        </div>
         <l-map ref="mapDOM" :center="center" :zoom="zoom" @ready="initMap">
-          <l-control>
-            <button
-              class="p-2 bg-white border border-gray-200 hover:bg-gray-50 rounded-md shadow-md"
-              @click="setUserCurrentLocation"
-            >
-              <IconMarker />
-            </button>
-          </l-control>
+          <map-sidebar-toggler />
+          <map-find-geolocation />
+          <map-loading />
+
           <l-tile-layer
             layer-type="base"
             name="OpenStreetMap"
@@ -46,13 +37,14 @@
 <script setup>
 import { nextTick, ref, watch } from 'vue'
 import 'leaflet/dist/leaflet.css'
-import { LControl, LMap, LTileLayer } from '@vue-leaflet/vue-leaflet'
+import { LMap, LTileLayer } from '@vue-leaflet/vue-leaflet'
 import MapLocationMarker from '@/components/base/map/MapLocationMarker.vue'
 import MapSearch from '@/components/base/map/MapSearch.vue'
 import MapSidebar from '@/components/base/map/MapSidebar.vue'
-import IconMarker from '@/components/base/icons/IconsMarker.vue'
 import { useMapStore } from '@/stores/map/map'
-import SpinnersDefault from '@/components/base/spinners/SpinnersDefault.vue'
+import MapSidebarToggler from '@/components/base/map/MapSidebarToggler.vue'
+import MapFindGeolocation from '@/components/base/map/MapFindGeolocation.vue'
+import MapLoading from '@/components/base/map/MapLoading.vue'
 
 const mapStore = useMapStore()
 const zoom = ref(18)
@@ -65,35 +57,25 @@ function setHeaderHeight() {
   headerHeight = document.querySelector('header').clientHeight
 }
 
-function setUserCurrentLocation() {
-  const currentLocation = mapStore.currentLocation
-
-  mapDOM.value.leafletObject
-  if (currentLocation && mapDOM.value && mapDOM.value.leafletObject) {
-    mapDOM.value.leafletObject.setView(currentLocation)
-  }
-}
-
-function initCurrentLocation() {
-  setUserCurrentLocation()
+function initUserGeolocation() {
+  mapStore.centerMap(mapStore.userGeolocation)
   mapStore.fetchLocations()
 }
 
 async function initMap() {
   mapStore.setMapDOM(mapDOM.value)
   await nextTick()
-  initCurrentLocation()
+  initUserGeolocation()
 }
 
 setHeaderHeight()
 watch(
-  () => mapStore.currentLocation,
+  () => mapStore.userGeolocation,
   (value, oldValue) => {
     // idea of this watcher is to trigger if there is a change in location, but the previous one was null.
     // this should cover the case when user manually enable location, or on first page visit.
     if (!oldValue && value) {
-      console.log('qwe')
-      initCurrentLocation()
+      initUserGeolocation()
     }
   },
   { deep: true }
@@ -103,5 +85,11 @@ watch(
 <style lang="scss" scoped>
 .map-sidebar-wrapper {
   height: calc(100vh - 15rem);
+}
+
+@media only screen and (max-width: 640px) {
+  .map-sidebar-wrapper {
+    height: 40%;
+  }
 }
 </style>
