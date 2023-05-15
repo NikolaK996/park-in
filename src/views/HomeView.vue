@@ -8,7 +8,9 @@
           Join our peer-to-peer platform for shared electric vehicle charging and sustainable
           development.
         </p>
-        <button class="hero-button" @click="authStore.openLoginModal">Get Started</button>
+        <button class="hero-button" @click="heroButtonHandler">
+          {{ user ? 'Go to Map' : 'Get Started' }}
+        </button>
       </div>
     </div>
     <div class="main-section">
@@ -29,8 +31,20 @@
 
 <script setup>
 import { useAuthStore } from '@/stores/auth/auth'
+import { useCurrentUser } from 'vuefire'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const authStore = useAuthStore()
+const user = useCurrentUser()
+
+function heroButtonHandler() {
+  if (user.value) {
+    router.push('/map')
+  } else {
+    authStore.openLoginModal()
+  }
+}
 </script>
 
 <style>

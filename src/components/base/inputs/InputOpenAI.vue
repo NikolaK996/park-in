@@ -50,12 +50,12 @@ async function submit(audioFile) {
 
     const {
       data: { text }
-    } = await openai.createTranscription(audioFile, 'whisper-1')
+    } = await openai.createTranscription(audioFile, 'whisper-1', null, 'json', 0, 'en')
 
     const { data } = await openai.createCompletion({
       model: 'text-davinci-003',
       prompt:
-        'answer short like a futuristic speech assistance for car drivers.' +
+        'answer short like a futuristic speech assistance for car drivers. Please only answer about electrical cars!' +
         'User input is: ' +
         text,
       max_tokens: 1000,

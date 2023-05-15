@@ -1,6 +1,7 @@
 import { computed, ref } from 'vue'
 import { useGeolocation } from '@vueuse/core'
 import axios from 'axios'
+import { getFilteredLocations } from '@/stores/map/composables/useMapLocations/helpers/getFilteredLocations'
 
 export function useMapLocations() {
   const locations = ref([])
@@ -41,13 +42,7 @@ export function useMapLocations() {
           }
         })
 
-        locations.value = data.map((item) => ({
-          name: item.AddressInfo.Title,
-          address: '',
-          latLng: [item.AddressInfo.Latitude, item.AddressInfo.Longitude],
-          status: 'Available',
-          active: false
-        }))
+        locations.value = getFilteredLocations(data)
       }
     } catch (error) {
       console.warn(error)
