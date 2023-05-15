@@ -5,7 +5,7 @@
         <input
           ref="inputDOM"
           :value="value"
-          class="p-2 rounded-md border-2 border-black w-full sm:w-auto"
+          class="p-2 rounded-md border-2 border-black md:w-[25rem] sm:w-[20rem] w-auto"
           placeholder="Search Adress"
           type="text"
           @focus="showResults = true"

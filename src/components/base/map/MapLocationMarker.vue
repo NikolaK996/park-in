@@ -8,6 +8,7 @@
     <l-popup>
       <span v-if="location.name" class="block text-lg font-bold mb-1">{{ location.name }}</span>
       <span v-if="location.address" class="block mb-1">Address: {{ location.address }}</span>
+      <span v-if="location.country" class="block mb-1">Country: {{ location.country }}</span>
       <span v-if="location.status" class="block">
         E-charging:
         <span :class="{ 'text-primary': location.status === 'Available' }">

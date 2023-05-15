@@ -10,7 +10,7 @@
 
 <script setup>
 import ModalContainer from '@/components/base/modal/ModalContainer.vue'
-import LoginForm from '@/components/sections/login/LoginForm.vue'
+import LoginForm from '@/components/sections/auth/login/LoginForm.vue'
 
 import { useAuthStore } from '@/stores/auth/auth'
 

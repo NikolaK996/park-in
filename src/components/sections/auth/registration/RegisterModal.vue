@@ -10,7 +10,7 @@
 
 <script setup>
 import ModalContainer from '@/components/base/modal/ModalContainer.vue'
-import RegistrationForm from '@/components/sections/registration/RegisterForm.vue'
+import RegistrationForm from '@/components/sections/auth/registration/RegisterForm.vue'
 
 import { useAuthStore } from '@/stores/auth/auth'
 
