@@ -14,6 +14,8 @@ import 'leaflet'
 // Vue Firebase package
 import { VueFire, VueFireAuth } from 'vuefire'
 import { firebaseApp } from './services/firebase'
+// plugin that enables different languages
+import { createLanguagePlugin } from '@/plugins/languages'
 
 const app = createApp(App)
 
@@ -24,5 +26,6 @@ app.use(VueFire, {
 })
 app.use(createPinia())
 app.use(router)
+app.use(createLanguagePlugin())
 
 app.mount('#app')

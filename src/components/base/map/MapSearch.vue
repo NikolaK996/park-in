@@ -10,7 +10,7 @@
 
 <script setup>
 import InputOpenAI from '@/components/base/inputs/InputOpenAI.vue'
-import { useMapStore } from '@/stores/map/map'
+import { useMapStore } from '@/stores/map/mapStore'
 
 const mapStore = useMapStore()
 

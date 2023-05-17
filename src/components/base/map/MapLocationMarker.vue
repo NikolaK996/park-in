@@ -7,10 +7,14 @@
   >
     <l-popup>
       <span v-if="location.name" class="block text-lg font-bold mb-1">{{ location.name }}</span>
-      <span v-if="location.address" class="block mb-1">Address: {{ location.address }}</span>
-      <span v-if="location.country" class="block mb-1">Country: {{ location.country }}</span>
+      <span v-if="location.address" class="block mb-1"
+        >{{ $t('map.sideBar.marker.address') }}: {{ location.address }}</span
+      >
+      <span v-if="location.country" class="block mb-1"
+        >{{ $t('map.sideBar.marker.country') }}: {{ location.country }}</span
+      >
       <span v-if="location.status" class="block">
-        E-charging:
+        {{ $t('map.sideBar.marker.status') }}:
         <span :class="{ 'text-primary': location.status === 'Available' }">
           {{ location.status }}
         </span>
@@ -22,7 +26,7 @@
 <script setup>
 import { defineProps, ref, watch } from 'vue'
 import { LMarker, LPopup } from '@vue-leaflet/vue-leaflet'
-import { useMapStore } from '@/stores/map/map'
+import { useMapStore } from '@/stores/map/mapStore'
 
 const props = defineProps({
   location: {

@@ -1,7 +1,7 @@
 <template>
   <div v-if="mapStore.locations.length > 0" class="map-sidebar h-full shadow-xl">
     <div class="p-2 w-full h-full bg-white/[.5] backdrop-blur-sm overflow-auto">
-      <h2 class="text-lg font-bold mb-2">Charging Spots</h2>
+      <h2 class="text-lg font-bold mb-2">{{ $t('map.sideBar.title') }}</h2>
       <ul class="divide-y divide-gray-400">
         <li v-for="(location, index) in mapStore.locations" :key="index" class="py-2">
           <div class="flex items-center justify-between">
@@ -20,7 +20,7 @@
                 class="text-sm text-blue-500 hover:text-blue-700 focus:outline-none"
                 @click="showLocation(location)"
               >
-                Show
+                {{ $t('map.sideBar.show') }}
               </button>
             </div>
           </div>
@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { useMapStore } from '@/stores/map/map'
+import { useMapStore } from '@/stores/map/mapStore'
 
 const mapStore = useMapStore()
 

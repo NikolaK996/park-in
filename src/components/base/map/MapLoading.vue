@@ -11,7 +11,7 @@
 
 <script setup>
 import { LControl } from '@vue-leaflet/vue-leaflet'
-import { useMapStore } from '@/stores/map/map'
+import { useMapStore } from '@/stores/map/mapStore'
 import SpinnersDefault from '@/components/base/spinners/SpinnersDefault.vue'
 
 const mapStore = useMapStore()

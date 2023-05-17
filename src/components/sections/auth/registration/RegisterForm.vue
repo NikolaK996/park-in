@@ -1,41 +1,41 @@
 <template>
   <form @submit.prevent="submitHandler">
     <div class="input-group mb-4">
-      <label class="text-sm" for="email">Email:</label>
+      <label class="text-sm" for="email">{{ $t('auth.email') }}:</label>
       <input id="email" v-model="email" class="text-sm" required type="email" />
     </div>
     <div class="input-group mb-4">
-      <label class="text-sm" for="password">Password:</label>
+      <label class="text-sm" for="password">{{ $t('auth.password') }}:</label>
       <input id="password" v-model="password" class="text-sm" required type="password" />
     </div>
     <div class="input-group mb-4">
-      <label class="text-sm" for="user-type">User Type:</label>
+      <label class="text-sm" for="user-type">{{ $t('auth.registration.userTypes.title') }}:</label>
       <select id="user-type" v-model="userType" class="text-sm" required>
-        <option value="">Select User Type</option>
-        <option value="private">Private Charging Spot</option>
-        <option value="distributor">Electricity Distributor</option>
-        <option value="public">Public Charging Spot</option>
+        <option value="">{{ $t('auth.registration.userTypes.placeholder') }}</option>
+        <option value="private">{{ $t('auth.registration.userTypes.regular') }}</option>
+        <option value="distributor">{{ $t('auth.registration.userTypes.distributor') }}</option>
+        <option value="public">{{ $t('auth.registration.userTypes.parkingOwner') }}</option>
       </select>
     </div>
     <div class="input-group mb-4">
-      <label class="text-sm" for="name">Name:</label>
+      <label class="text-sm" for="name">{{ $t('auth.registration.name') }}:</label>
       <input id="name" v-model="name" class="text-sm" required type="text" />
     </div>
     <div class="flex items-enter justify-end">
-      <button class="px-8 py-4" type="submit">Register</button>
+      <button class="px-8 py-4" type="submit">{{ $t('auth.registration.button') }}</button>
     </div>
     <a
       class="block text-center cursor-pointer hover:text-primary underline text-sm mt-4"
       @click="switchToLoginModal"
     >
-      Login
+      {{ $t('auth.registration.logIn') }}
     </a>
   </form>
 </template>
 
 <script setup>
 import { defineEmits, ref } from 'vue'
-import { useAuthStore } from '@/stores/auth/auth'
+import { useAuthStore } from '@/stores/auth/authStore'
 
 const authStore = useAuthStore()
 const emits = defineEmits(['submit'])

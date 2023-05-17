@@ -1,7 +1,7 @@
 <template>
   <ModalContainer @close="authStore.closeLoginModal()">
     <div class="p-12 sm:min-w-[32rem]">
-      <h2 class="text-2xl mb-4">Login</h2>
+      <h2 class="text-2xl mb-4">{{ $t('auth.login.title') }}</h2>
 
       <LoginForm @submit="login" />
     </div>
@@ -12,7 +12,7 @@
 import ModalContainer from '@/components/base/modal/ModalContainer.vue'
 import LoginForm from '@/components/sections/auth/login/LoginForm.vue'
 
-import { useAuthStore } from '@/stores/auth/auth'
+import { useAuthStore } from '@/stores/auth/authStore'
 
 const authStore = useAuthStore()
 

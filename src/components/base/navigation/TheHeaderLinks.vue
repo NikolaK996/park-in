@@ -7,7 +7,7 @@
         exact-active-class="router-link-active"
         to="/"
       >
-        Home
+        {{ $t('header.home') }}
       </RouterLink>
     </li>
     <li v-if="user" class="mx-2 py-3 px-1">
@@ -17,7 +17,7 @@
         exact-active-class="router-link-active"
         to="/map"
       >
-        Map
+        {{ $t('header.map') }}
       </RouterLink>
     </li>
     <li v-if="user" class="mx-2 py-3 px-1">
@@ -27,7 +27,7 @@
         exact-active-class="router-link-active"
         to="/profile"
       >
-        Profile
+        {{ $t('header.profile') }}
       </RouterLink>
     </li>
     <li v-if="!user" class="mx-2">
@@ -36,7 +36,7 @@
         type="button"
         @click="authStore.openLoginModal()"
       >
-        Sign in
+        {{ $t('header.signIn') }}
       </button>
     </li>
   </ul>
@@ -45,7 +45,7 @@
 <script setup>
 import { defineEmits, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { useAuthStore } from '@/stores/auth/auth'
+import { useAuthStore } from '@/stores/auth/authStore'
 import { useCurrentUser } from 'vuefire'
 
 const user = useCurrentUser()

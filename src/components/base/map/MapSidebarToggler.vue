@@ -20,7 +20,7 @@
 
 <script setup>
 import { LControl } from '@vue-leaflet/vue-leaflet'
-import { useMapStore } from '@/stores/map/map'
+import { useMapStore } from '@/stores/map/mapStore'
 
 const mapStore = useMapStore()
 </script>

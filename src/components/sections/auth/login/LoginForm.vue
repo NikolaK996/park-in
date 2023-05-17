@@ -1,28 +1,28 @@
 <template>
   <form @submit.prevent="submitHandler">
     <div class="input-group mb-4">
-      <label class="text-sm" for="email">Email:</label>
+      <label class="text-sm" for="email">{{ $t('auth.email') }}:</label>
       <input id="email" v-model="email" class="text-sm" required type="email" />
     </div>
     <div class="input-group mb-4">
-      <label class="text-sm" for="password">Password:</label>
+      <label class="text-sm" for="password">{{ $t('auth.password') }}:</label>
       <input id="password" v-model="password" class="text-sm" required type="password" />
     </div>
 
     <div class="flex items-enter justify-end">
-      <button class="px-8 py-4" type="submit">Login</button>
+      <button class="px-8 py-4" type="submit">{{ $t('auth.login.button') }}</button>
     </div>
     <a
       class="block text-center cursor-pointer hover:text-primary underline text-sm mt-4"
       @click="switchToRegisterModal"
-      >Registration</a
+      >{{ $t('auth.login.createAccount') }}</a
     >
   </form>
 </template>
 
 <script setup>
 import { defineEmits, ref } from 'vue'
-import { useAuthStore } from '@/stores/auth/auth'
+import { useAuthStore } from '@/stores/auth/authStore'
 
 const authStore = useAuthStore()
 const emits = defineEmits(['submit'])
