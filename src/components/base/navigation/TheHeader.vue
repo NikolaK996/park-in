@@ -6,16 +6,20 @@
       </RouterLink>
 
       <TheHeaderLinks class="sm:flex hidden" />
-      <IconsHamburger
-        v-if="!mobileMenuVisible"
-        class="w-[3rem] h-[3rem] p-2 cursor-pointer z-5"
-        @click="mobileMenuVisible = !mobileMenuVisible"
-      />
-      <IconsClose
-        v-else
-        class="text-white w-[3rem] h-[3rem] cursor-pointer p-2 z-5"
-        @click="mobileMenuVisible = !mobileMenuVisible"
-      />
+
+      <div class="flex">
+        <input-language v-if="!user" class="mr-4" />
+        <IconsHamburger
+          v-if="!mobileMenuVisible"
+          class="w-[3rem] h-[3rem] p-2 cursor-pointer z-5"
+          @click="mobileMenuVisible = !mobileMenuVisible"
+        />
+        <IconsClose
+          v-else
+          class="text-white w-[3rem] h-[3rem] cursor-pointer p-2 z-5 mr-4"
+          @click="mobileMenuVisible = !mobileMenuVisible"
+        />
+      </div>
     </nav>
 
     <transition name="fade">
@@ -31,10 +35,13 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useCurrentUser } from 'vuefire'
 import IconsHamburger from '@/components/base/icons/IconsHamburger.vue'
 import IconsClose from '@/components/base/icons/IconsClose.vue'
 import TheHeaderLinks from '@/components/base/navigation/TheHeaderLinks.vue'
+import InputLanguage from '../inputs/InputLanguage.vue'
 
+const user = useCurrentUser()
 const mobileMenuVisible = ref(false)
 // watcher that prevents browser scrolling when mobile menu is visible
 watch(

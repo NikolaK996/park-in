@@ -18,12 +18,14 @@ import { useSpeechSynthesis } from '@vueuse/core'
 import { Configuration, OpenAIApi } from 'openai'
 import InputSearch from '@/components/base/inputs/InputSearch.vue'
 import { toast } from 'vue3-toastify'
+import { useLanguagesStore } from '@/stores/languages/languagesStore'
 
 defineProps({
   value: { type: String, required: true },
   results: { type: Array, required: true }
 })
 defineEmits(['input', 'search', 'select'])
+const languagesStore = useLanguagesStore()
 
 // solves following issue: https://github.com/openai/openai-node/issues/75
 class MockedFormData extends FormData {
@@ -50,7 +52,14 @@ async function submit(audioFile) {
 
     const {
       data: { text }
-    } = await openai.createTranscription(audioFile, 'whisper-1', null, 'json', 0, 'en')
+    } = await openai.createTranscription(
+      audioFile,
+      'whisper-1',
+      null,
+      'json',
+      0,
+      languagesStore.currentLanguage
+    )
 
     const { data } = await openai.createCompletion({
       model: 'text-davinci-003',
@@ -71,7 +80,7 @@ async function submit(audioFile) {
 
     toast.remove()
     toast.success(answer)
-    const speech = useSpeechSynthesis(answer, { lang: 'en-US' })
+    const speech = useSpeechSynthesis(answer, { lang: languagesStore.currentLanguage })
 
     if (speech.isSupported.value) {
       speech.speak()

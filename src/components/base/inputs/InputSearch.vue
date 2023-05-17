@@ -4,9 +4,9 @@
       <div class="relative">
         <input
           ref="inputDOM"
+          :placeholder="$t('map.searchPlaceholder')"
           :value="value"
           class="p-2 rounded-md border-2 border-black md:w-[25rem] sm:w-[20rem] w-auto"
-          placeholder="Search Adress"
           type="text"
           @focus="showResults = true"
           @input="inputHandler"

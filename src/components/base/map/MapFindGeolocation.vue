@@ -12,7 +12,7 @@
 <script setup>
 import { LControl } from '@vue-leaflet/vue-leaflet'
 import IconMarker from '@/components/base/icons/IconsMarker.vue'
-import { useMapStore } from '@/stores/map/map'
+import { useMapStore } from '@/stores/map/mapStore'
 import { toast } from 'vue3-toastify'
 
 const mapStore = useMapStore()
