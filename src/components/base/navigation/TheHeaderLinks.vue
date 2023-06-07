@@ -30,6 +30,16 @@
         {{ $t('header.profile') }}
       </RouterLink>
     </li>
+    <li v-if="user && false" class="mx-2 py-3 px-1">
+      <RouterLink
+        class="font-semibold hover:underline"
+        exact
+        exact-active-class="router-link-active"
+        to="/dashboard"
+      >
+        Dashboard
+      </RouterLink>
+    </li>
     <li v-if="!user" class="mx-2">
       <button
         class="font-semibold py-2 px-4 text-primary bg-white shadow-md"

@@ -29,6 +29,36 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/ProfileView.vue')
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      meta: {
+        requiresAuth: true
+      },
+      component: () => import('../views/DashboardView.vue'),
+      children: [
+        {
+          path: '', // Empty path to match '/dashboard' itself
+          redirect: '/dashboard/overview' // Redirect to the 'overview' child route
+        },
+        {
+          path: 'overview',
+          name: 'overview',
+          meta: {
+            requiresAuth: true
+          },
+          component: () => import('../components/sections/dashboard/DashboardOverview.vue')
+        },
+        {
+          path: 'messages',
+          name: 'messages',
+          meta: {
+            requiresAuth: true
+          },
+          component: () => import('../components/sections/dashboard/DashboardMessages.vue')
+        }
+      ]
     }
   ]
 })

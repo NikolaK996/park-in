@@ -1,13 +1,13 @@
 export const sl = {
   header: {
-    home: 'Domača stran',
+    home: 'Glavna stran',
     map: 'Zemljevid',
     profile: 'Profil',
     signIn: 'Prijava'
   },
   home: {
     hero: {
-      title: 'Poiščite polnilnike za električne avtomobile v vaši bližini',
+      title: 'Poiščite polnilnice za električne avtomobile v svoji bližini',
       description:
         'Pridružite se naši platformi enakovrednih za skupno polnjenje električnih vozil in trajnostni razvoj.',
       button: {
@@ -54,8 +54,8 @@ export const sl = {
     email: 'Elektronski naslov',
     password: 'Geslo',
     login: {
-      title: 'Vpiši se',
-      button: 'Vpiši se',
+      title: 'Prijava',
+      button: 'Prijava',
       createAccount: 'Registracija'
     },
     registration: {
@@ -69,7 +69,7 @@ export const sl = {
       },
       name: 'Ime',
       button: 'Registracija',
-      logIn: 'Vpiši se'
+      logIn: 'Prijava'
     }
   }
 }
