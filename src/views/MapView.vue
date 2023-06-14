@@ -29,7 +29,7 @@
             :location="location"
           />
           <l-marker :lat-lng="[geolocationStore.latitude, geolocationStore.longitude]">
-            <l-icon :icon-size="[35, 35]" icon-url="/src/assets/icons/location.png" />
+            <l-icon :icon-size="[35, 35]" :icon-url="locationsImageUrl" />
           </l-marker>
         </l-map>
       </div>
@@ -42,6 +42,7 @@ import { nextTick, onBeforeMount, ref, watch } from 'vue'
 
 import 'leaflet/dist/leaflet.css'
 import { LIcon, LMap, LMarker, LTileLayer } from '@vue-leaflet/vue-leaflet'
+import locationsImageUrl from '../assets/icons/location.png'
 
 import MapFindGeolocation from '@/components/sections/map/MapFindGeolocation.vue'
 import MapLoading from '@/components/sections/map/MapLoading.vue'
