@@ -1,6 +1,6 @@
 <template>
   <l-marker :lat-lng="location.latLng" :name="location.name">
-    <l-icon :icon-size="[35, 35]" icon-url="/src/assets/icons/charger.png" />
+    <l-icon :icon-size="[35, 35]" :icon-url="chargerImageUrl" />
     <l-popup>
       <span v-if="location.name" class="block text-lg font-bold mb-1">{{ location.name }}</span>
       <span v-if="location.address" class="block mb-1"
@@ -29,6 +29,7 @@
 import { defineProps } from 'vue'
 
 import { LIcon, LMarker, LPopup } from '@vue-leaflet/vue-leaflet'
+import chargerImageUrl from '../../../assets/icons/charger.png'
 
 import { useMapDirectionsStore } from '@/stores/map/directions/mapDirectionsStore'
 
