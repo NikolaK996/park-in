@@ -1,10 +1,6 @@
 <template>
-  <l-marker
-    ref="marker"
-    :lat-lng="location.latLng"
-    :name="location.name"
-    @popupclose="closePopupHandler"
-  >
+  <l-marker :lat-lng="location.latLng" :name="location.name">
+    <l-icon :icon-size="[35, 35]" icon-url="/src/assets/icons/charger.png" />
     <l-popup>
       <span v-if="location.name" class="block text-lg font-bold mb-1">{{ location.name }}</span>
       <span v-if="location.address" class="block mb-1"
@@ -13,44 +9,37 @@
       <span v-if="location.country" class="block mb-1"
         >{{ $t('map.sideBar.marker.country') }}: {{ location.country }}</span
       >
-      <span v-if="location.status" class="block">
+      <span v-if="location.status" class="block mb-1">
         {{ $t('map.sideBar.marker.status') }}:
         <span :class="{ 'text-primary': location.status === 'Available' }">
           {{ location.status }}
         </span>
+      </span>
+      <span
+        class="text-primary underline cursor-pointer"
+        @click="mapDirectionsStore.setDirection(location.latLng[0], location.latLng[1], false)"
+      >
+        Directions
       </span>
     </l-popup>
   </l-marker>
 </template>
 
 <script setup>
-import { defineProps, ref, watch } from 'vue'
-import { LMarker, LPopup } from '@vue-leaflet/vue-leaflet'
-import { useMapStore } from '@/stores/map/mapStore'
+import { defineProps } from 'vue'
 
-const props = defineProps({
+import { LIcon, LMarker, LPopup } from '@vue-leaflet/vue-leaflet'
+
+import { useMapDirectionsStore } from '@/stores/map/directions/mapDirectionsStore'
+
+defineProps({
   location: {
     type: Object,
     required: true,
     default: () => {}
   }
 })
-const mapStore = useMapStore()
-const marker = ref(null)
-
-function closePopupHandler() {
-  mapStore.locations.find((item) => item.id === props.location.id).active = false
-}
-
-watch(
-  props.location,
-  () => {
-    if (props.location.active) {
-      marker.value.leafletObject.openPopup()
-    }
-  },
-  { deep: true }
-)
+const mapDirectionsStore = useMapDirectionsStore()
 </script>
 
 <style scoped></style>

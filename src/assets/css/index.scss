@@ -2,3 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import "toast-notifications.scss";
+
+.leaflet-routing-container {
+  display: none;
+}

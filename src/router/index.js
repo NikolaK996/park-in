@@ -1,11 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuthGuard } from '@/router/composables/useAuthGuard'
-import MapView from '../views/MapView.vue'
+
 import HomeView from '../views/HomeView.vue'
+import MapView from '../views/MapView.vue'
+import PageNotFound from '../views/PageNotFound.vue'
+
+import { useAuthGuard } from '@/router/composables/useAuthGuard'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    { path: '/:pathMatch(.*)*', component: PageNotFound }, // 404 page
     {
       path: '/',
       name: 'home',

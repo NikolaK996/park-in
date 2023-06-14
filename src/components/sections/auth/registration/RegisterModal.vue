@@ -11,13 +11,12 @@
 <script setup>
 import ModalContainer from '@/components/base/modal/ModalContainer.vue'
 import RegistrationForm from '@/components/sections/auth/registration/RegisterForm.vue'
-
 import { useAuthStore } from '@/stores/auth/authStore'
 
 const authStore = useAuthStore()
 
-function register({ email, password }) {
-  authStore.register(email, password)
+function register({ email, password, displayName, userType }) {
+  authStore.register({ email, password, displayName, userType })
 }
 </script>
 

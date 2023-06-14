@@ -2,11 +2,11 @@ import { getCurrentUser } from 'vuefire'
 
 export const useAuthGuard = () => {
   async function redirect(to) {
-    // routes with `meta: { requiresAuth: true }` will check for the users, others won't
+    // routes with `meta: { requiresAuth: true }` will check for a user, others won't
     if (to.meta.requiresAuth) {
       const currentUser = await getCurrentUser()
 
-      // if the user is not logged in, redirect to the home page
+      // if a user is not logged in, redirect to home page
       if (!currentUser) {
         return '/'
       }

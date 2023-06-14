@@ -1,13 +1,13 @@
-import { defineStore } from 'pinia'
-
-import { useAuthModals } from '@/stores/auth/composables/useAuthModals'
 import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
   signOut
 } from 'firebase/auth'
+import { defineStore } from 'pinia'
 import { toast } from 'vue3-toastify'
+
+import { useAuthModals } from '@/stores/auth/composables/useAuthModals'
 
 export const useAuthStore = defineStore('auth', () => {
   const auth = getAuth()

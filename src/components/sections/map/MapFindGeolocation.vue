@@ -11,22 +11,31 @@
 
 <script setup>
 import { LControl } from '@vue-leaflet/vue-leaflet'
-import IconMarker from '@/components/base/icons/IconsMarker.vue'
-import { useMapStore } from '@/stores/map/mapStore'
+
 import { toast } from 'vue3-toastify'
 
+import IconMarker from '@/components/base/icons/IconsMarker.vue'
+import { useGeolocationStore } from '@/stores/geolocation/geolocationStore'
+import { useMapStore } from '@/stores/map/mapStore'
+
+const geolocationStore = useGeolocationStore()
 const mapStore = useMapStore()
 
 function locateUser() {
-  if (mapStore.userGeolocation) {
-    mapStore.searchAddress(mapStore.userGeolocation)
-  } else {
-    toast.error(
-      'Please allow your browser location so we can show results around you. In case of anxiety, use manually search.',
+  geolocationStore.resume()
+
+  if (geolocationStore.error) {
+    toast.warn(
+      'Please allow location in your browser to enable live tracking feature and overall better experience.',
       {
         multiple: false
       }
     )
+  }
+
+  if (geolocationStore.latitude && geolocationStore.longitude) {
+    mapStore.centerMap(geolocationStore.latitude, geolocationStore.longitude)
+    mapStore.setZoom(18)
   }
 }
 </script>

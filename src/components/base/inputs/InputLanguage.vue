@@ -18,6 +18,7 @@
 
 <script setup>
 import { onMounted } from 'vue'
+
 import { useLanguagesStore } from '@/stores/languages/languagesStore'
 
 const languagesStore = useLanguagesStore()

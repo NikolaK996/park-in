@@ -10,6 +10,7 @@
 
 <script>
 import { defineComponent } from 'vue'
+
 import DashboardSidebar from '../components/sections/dashboard/DashboardSidebar.vue'
 
 export default defineComponent({

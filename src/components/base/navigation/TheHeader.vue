@@ -8,7 +8,7 @@
       <TheHeaderLinks class="sm:flex hidden" />
 
       <div class="flex">
-        <input-language v-if="!user" class="mr-4" />
+        <input-language v-if="!usersStore.user" class="mr-4" />
         <IconsHamburger
           v-if="!mobileMenuVisible"
           class="w-[3rem] h-[3rem] p-2 cursor-pointer z-5"
@@ -34,14 +34,17 @@
 
 <script setup>
 import { ref, watch } from 'vue'
+
 import { RouterLink } from 'vue-router'
-import { useCurrentUser } from 'vuefire'
-import IconsHamburger from '@/components/base/icons/IconsHamburger.vue'
-import IconsClose from '@/components/base/icons/IconsClose.vue'
-import TheHeaderLinks from '@/components/base/navigation/TheHeaderLinks.vue'
+
 import InputLanguage from '../inputs/InputLanguage.vue'
 
-const user = useCurrentUser()
+import IconsClose from '@/components/base/icons/IconsClose.vue'
+import IconsHamburger from '@/components/base/icons/IconsHamburger.vue'
+import TheHeaderLinks from '@/components/base/navigation/TheHeaderLinks.vue'
+import { useUsersStore } from '@/stores/users/usersStore'
+
+const usersStore = useUsersStore()
 const mobileMenuVisible = ref(false)
 // watcher that prevents browser scrolling when mobile menu is visible
 watch(

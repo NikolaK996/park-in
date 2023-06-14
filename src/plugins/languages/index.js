@@ -1,8 +1,10 @@
 import { createI18n } from 'vue-i18n'
-import { DEFAULT_LANGUAGE } from '@/stores/languages/constants/defaultLanguage'
+
 import { en } from './en'
-import { sr } from './sr'
 import { sl } from './sl'
+import { sr } from './sr'
+
+import { DEFAULT_LANGUAGE } from '@/stores/languages/constants/defaultLanguage'
 
 export function createLanguagePlugin() {
   return createI18n({
