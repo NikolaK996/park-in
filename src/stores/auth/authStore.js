@@ -1,16 +1,19 @@
-import { defineStore } from 'pinia'
-
-import { useAuthModals } from '@/stores/auth/composables/useAuthModals'
 import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
   signOut
 } from 'firebase/auth'
+import { defineStore } from 'pinia'
 import { toast } from 'vue3-toastify'
+
+import { useAuthModals } from '@/stores/auth/composables/useAuthModals'
+import { useUsersStore } from '@/stores/users/usersStore'
 
 export const useAuthStore = defineStore('auth', () => {
   const auth = getAuth()
+  const usersStore = useUsersStore()
+
   const {
     showLoginForm,
     showRegistrationForm,
@@ -23,6 +26,9 @@ export const useAuthStore = defineStore('auth', () => {
   async function login(email, password) {
     try {
       await signInWithEmailAndPassword(auth, email, password)
+
+      await usersStore.fetchUser(auth.currentUser.uid)
+
       closeLoginModal()
       toast.success('Logged in successfully.', {
         position: 'top-right'
@@ -34,11 +40,18 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  async function register(email, password) {
+  async function register({ email, password, displayName, userType }) {
     try {
       await createUserWithEmailAndPassword(auth, email, password)
+      await usersStore.createUser(auth.currentUser.uid, {
+        email,
+        password,
+        displayName,
+        userType,
+        uid: auth.currentUser.uid
+      })
       closeRegistrationModal()
-      toast.success('Created a new user successfully.', {
+      toast.success('Created a new users successfully.', {
         position: 'top-right'
       })
     } catch (error) {
@@ -51,6 +64,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function logout() {
     try {
       await signOut(auth)
+      usersStore.reset()
     } catch (error) {
       toast.error(error?.message ?? 'Please try again.', {
         position: 'top-right'

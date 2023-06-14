@@ -11,15 +11,17 @@
     <div class="input-group mb-4">
       <label class="text-sm" for="user-type">{{ $t('auth.registration.userTypes.title') }}:</label>
       <select id="user-type" v-model="userType" class="text-sm" required>
-        <option value="">{{ $t('auth.registration.userTypes.placeholder') }}</option>
-        <option value="private">{{ $t('auth.registration.userTypes.regular') }}</option>
+        <option disabled hidden selected value="">
+          {{ $t('auth.registration.userTypes.placeholder') }}
+        </option>
+        <option value="regular">{{ $t('auth.registration.userTypes.regular') }}</option>
+        <option value="parkingOwner">{{ $t('auth.registration.userTypes.parkingOwner') }}</option>
         <option value="distributor">{{ $t('auth.registration.userTypes.distributor') }}</option>
-        <option value="public">{{ $t('auth.registration.userTypes.parkingOwner') }}</option>
       </select>
     </div>
     <div class="input-group mb-4">
       <label class="text-sm" for="name">{{ $t('auth.registration.name') }}:</label>
-      <input id="name" v-model="name" class="text-sm" required type="text" />
+      <input id="name" v-model="displayName" class="text-sm" required type="text" />
     </div>
     <div class="flex items-enter justify-end">
       <button class="px-8 py-4" type="submit">{{ $t('auth.registration.button') }}</button>
@@ -35,6 +37,7 @@
 
 <script setup>
 import { defineEmits, ref } from 'vue'
+
 import { useAuthStore } from '@/stores/auth/authStore'
 
 const authStore = useAuthStore()
@@ -43,7 +46,7 @@ const emits = defineEmits(['submit'])
 const email = ref('')
 const password = ref('')
 const userType = ref('')
-const name = ref('')
+const displayName = ref('')
 
 const switchToLoginModal = () => {
   authStore.closeRegistrationModal()
@@ -54,7 +57,7 @@ const submitHandler = () => {
     email: email.value,
     password: password.value,
     userType: userType.value,
-    name: name.value
+    displayName: displayName.value
   })
 }
 </script>

@@ -24,10 +24,13 @@
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <map-location-marker
-            v-for="(location, index) in mapStore.locations"
+            v-for="(location, index) in mapLocationsStore.locations"
             :key="index"
             :location="location"
           />
+          <l-marker :lat-lng="[geolocationStore.latitude, geolocationStore.longitude]">
+            <l-icon :icon-size="[35, 35]" icon-url="/src/assets/icons/location.png" />
+          </l-marker>
         </l-map>
       </div>
     </main>
@@ -35,19 +38,29 @@
 </template>
 
 <script setup>
-import { nextTick, ref, watch } from 'vue'
+import { nextTick, onBeforeMount, ref, watch } from 'vue'
+
 import 'leaflet/dist/leaflet.css'
-import { LMap, LTileLayer } from '@vue-leaflet/vue-leaflet'
-import MapLocationMarker from '@/components/base/map/MapLocationMarker.vue'
-import MapSearch from '@/components/base/map/MapSearch.vue'
-import MapSidebar from '@/components/base/map/MapSidebar.vue'
+import { LIcon, LMap, LMarker, LTileLayer } from '@vue-leaflet/vue-leaflet'
+
+import MapFindGeolocation from '@/components/sections/map/MapFindGeolocation.vue'
+import MapLoading from '@/components/sections/map/MapLoading.vue'
+import MapLocationMarker from '@/components/sections/map/MapLocationMarker.vue'
+import MapSearch from '@/components/sections/map/MapSearch.vue'
+import MapSidebar from '@/components/sections/map/MapSidebar.vue'
+import MapSidebarToggler from '@/components/sections/map/MapSidebarToggler.vue'
+import { useGeolocationStore } from '@/stores/geolocation/geolocationStore'
+import { useGlobalStore } from '@/stores/global/globalStore'
+import { useMapDirectionsStore } from '@/stores/map/directions/mapDirectionsStore'
+import { useMapLocationsStore } from '@/stores/map/locations/mapLocationsStore'
 import { useMapStore } from '@/stores/map/mapStore'
-import MapSidebarToggler from '@/components/base/map/MapSidebarToggler.vue'
-import MapFindGeolocation from '@/components/base/map/MapFindGeolocation.vue'
-import MapLoading from '@/components/base/map/MapLoading.vue'
 
 const mapStore = useMapStore()
-const zoom = ref(18)
+const geolocationStore = useGeolocationStore()
+const mapLocationsStore = useMapLocationsStore()
+const mapDirectionsStore = useMapDirectionsStore()
+const globalStore = useGlobalStore()
+const zoom = ref(10)
 const center = ref([47.31322, -1.319482])
 
 let headerHeight = null
@@ -57,32 +70,45 @@ function setHeaderHeight() {
   headerHeight = document.querySelector('header').clientHeight
 }
 
-function initUserGeolocation() {
-  mapStore.centerMap(mapStore.userGeolocation)
-  mapStore.fetchLocations()
+async function initLocationsAroundUser() {
+  await mapLocationsStore.fetchLocations()
+  mapStore.centerMap(geolocationStore.latitude, geolocationStore.longitude, 14)
+  // mapStore.setZoom(18)
 }
 
 async function initMap() {
-  mapStore.setMapDOM(mapDOM.value)
-  await nextTick()
-  initUserGeolocation()
+  try {
+    globalStore.setLoading(true)
+    await geolocationStore.getUserCountry()
+    mapStore.setMapDOM(mapDOM.value)
+    await nextTick()
+    mapStore.centerMap(geolocationStore.latitude, geolocationStore.longitude)
+    mapDirectionsStore.createRouteDOM()
+    globalStore.setLoading(false)
+
+    initLocationsAroundUser()
+  } catch (e) {
+    console.log(e)
+  }
 }
 
-setHeaderHeight()
+onBeforeMount(() => {
+  setHeaderHeight()
+})
+
 watch(
-  () => mapStore.userGeolocation,
+  () => geolocationStore.latitude,
   (value, oldValue) => {
     // idea of this watcher is to trigger if there is a change in location, but the previous one was null.
     // this should cover the case when user manually enable location, or on first page visit.
     if (!oldValue && value) {
-      initUserGeolocation()
+      mapStore.centerMap(geolocationStore.latitude, geolocationStore.longitude)
     }
-  },
-  { deep: true }
+  }
 )
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .map-sidebar-wrapper {
   height: calc(100vh - 15rem);
 }

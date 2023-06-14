@@ -62,10 +62,10 @@ export const en = {
       title: 'Registration',
       userTypes: {
         title: 'User type',
-        placeholder: 'Select user type',
-        regular: 'Public Charging Spot',
-        distributor: 'Electricity distributor',
-        parkingOwner: 'Private Charging spot '
+        placeholder: 'Select users type',
+        regular: 'E-Charger Seeker',
+        distributor: 'E-Parking Owner',
+        parkingOwner: 'E-Charger Distributor'
       },
       name: 'Name',
       button: 'Register',

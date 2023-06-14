@@ -22,6 +22,7 @@
 
 <script setup>
 import { defineEmits, ref } from 'vue'
+
 import { useAuthStore } from '@/stores/auth/authStore'
 
 const authStore = useAuthStore()

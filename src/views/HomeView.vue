@@ -12,7 +12,7 @@
             {{ $t('home.hero.description') }}
           </p>
           <a
-            v-if="!user"
+            v-if="!usersStore.user"
             class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300"
             href="#"
             @click="authStore.openLoginModal()"
@@ -32,7 +32,7 @@
             </svg>
           </a>
           <a
-            v-if="user"
+            v-if="usersStore.user"
             class="inline-flex items-center text-white justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-400 rounded-lg hover:text-primary hover:bg-gray-100 focus:ring-4 focus:ring-gray-100"
             href="#"
             @click="$router.push('map')"
@@ -74,7 +74,7 @@
             enhances access in non-commercially viable locations.
           </p>
           <button
-            v-if="!user"
+            v-if="!usersStore.user"
             class="inline-flex items-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900"
             @click="authStore.openLoginModal()"
           >
@@ -307,6 +307,7 @@
             charging solutions, real-time information, and a supportive community.
           </p>
           <a
+            v-if="!usersStore.user"
             class="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center rounded-lg bg-primary-400 hover:bg-primary-300 focus:ring-4 focus:ring-primary-300"
             href="#"
           >
@@ -333,12 +334,12 @@
 </template>
 
 <script setup>
-import HomeFooter from '../components/sections/home/HomeFooter.vue'
-import { useCurrentUser } from 'vuefire'
+import HomeFooter from '@/components/sections/home/HomeFooter.vue'
 import { useAuthStore } from '@/stores/auth/authStore'
+import { useUsersStore } from '@/stores/users/usersStore'
 
 const authStore = useAuthStore()
-const user = useCurrentUser()
+const usersStore = useUsersStore()
 </script>
 
 <style lang="scss">

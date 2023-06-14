@@ -1,30 +1,15 @@
 <template>
-  <div class="relative">
-    <input-search
-      :results="results"
-      :value="value"
-      enable-voice-search
-      @input="$emit('input', $event)"
-      @search="$emit('search')"
-      @select="$emit('select', $event)"
-      @voice-search="submit"
-    />
-  </div>
+  <input-voice @input="submit" />
 </template>
 
 <script setup>
-import { defineEmits, defineProps } from 'vue'
 import { useSpeechSynthesis } from '@vueuse/core'
 import { Configuration, OpenAIApi } from 'openai'
-import InputSearch from '@/components/base/inputs/InputSearch.vue'
 import { toast } from 'vue3-toastify'
+
+import InputVoice from '@/components/base/inputs/InputVoice.vue'
 import { useLanguagesStore } from '@/stores/languages/languagesStore'
 
-defineProps({
-  value: { type: String, required: true },
-  results: { type: Array, required: true }
-})
-defineEmits(['input', 'search', 'select'])
 const languagesStore = useLanguagesStore()
 
 // solves following issue: https://github.com/openai/openai-node/issues/75
@@ -65,8 +50,7 @@ async function submit(audioFile) {
       model: 'text-davinci-003',
       prompt:
         'answer short like a futuristic speech assistance for car drivers. Please only answer about electrical cars!' +
-        'User input is: ' +
-        text,
+        `User input is: ${text}`,
       max_tokens: 1000,
       temperature: 0.9,
       top_p: 1,

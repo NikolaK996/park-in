@@ -3,6 +3,6 @@
 </template>
 
 <script setup>
-import SvgIcon from 'vue3-icon'
 import { mdiClose } from '@mdi/js'
+import SvgIcon from 'vue3-icon'
 </script>

@@ -1,9 +1,14 @@
 import { createApp } from 'vue'
+
 import { createPinia } from 'pinia'
+import Vue3Toasity from 'vue3-toastify'
 
 import App from './App.vue'
 import router from './router'
-import Vue3Toasity from 'vue3-toastify'
+import { firebaseApp } from './services/firebase'
+
+import { createLanguagePlugin } from '@/plugins/languages'
+
 // required style for leaflet map plugin
 import 'leaflet/dist/leaflet.css'
 // Vue Toast plugin for notifications
@@ -12,10 +17,10 @@ import 'vue3-toastify/dist/index.css'
 import './assets/css/index.scss'
 import 'leaflet'
 // Vue Firebase package
+// eslint-disable-next-line import/order
 import { VueFire, VueFireAuth } from 'vuefire'
-import { firebaseApp } from './services/firebase'
+
 // plugin that enables different languages
-import { createLanguagePlugin } from '@/plugins/languages'
 
 const app = createApp(App)
 

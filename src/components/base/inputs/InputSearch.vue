@@ -1,5 +1,5 @@
 <template>
-  <form class="flex items-center justify-center p-2 bg-gray-50" @submit.prevent="search">
+  <form @submit.prevent="search">
     <div class="relative flex p-2">
       <div class="relative">
         <input
@@ -33,16 +33,15 @@
         </template>
       </div>
     </div>
-    <input-voice v-if="props.enableVoiceSearch" @input="$emit('voice-search', $event)" />
   </form>
 </template>
 
 <script setup>
-import IconsSearch from '@/components/base/icons/IconsSearch.vue'
-import InputVoice from '@/components/base/inputs/InputVoice.vue'
-
 import { defineEmits, defineProps, nextTick, ref } from 'vue'
+
 import { onClickOutside, useDebounceFn } from '@vueuse/core'
+
+import IconsSearch from '@/components/base/icons/IconsSearch.vue'
 
 const props = defineProps({
   value: {

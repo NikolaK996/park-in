@@ -1,8 +1,9 @@
+import { useLocalStorage } from '@vueuse/core'
 import { defineStore } from 'pinia'
 import { useI18n } from 'vue-i18n'
-import { DEFAULT_LANGUAGE } from '@/stores/languages/constants/defaultLanguage'
+
 import { AVAILABLE_LANGUAGES } from '@/stores/languages/constants/availableLanguages'
-import { useLocalStorage } from '@vueuse/core'
+import { DEFAULT_LANGUAGE } from '@/stores/languages/constants/defaultLanguage'
 
 export const useLanguagesStore = defineStore('languages', () => {
   const currentLanguage = useLocalStorage('lang', DEFAULT_LANGUAGE)
@@ -14,7 +15,7 @@ export const useLanguagesStore = defineStore('languages', () => {
     i18n.locale.value = languageCode
   }
 
-  // since user can directly change value in local storage, it's good to validity check it first.
+  // since users can directly change value in local storage, it's good to validity check it first.
   function checkIsCurrentLanguageValid() {
     const isCurrentLanguageValid = availableLanguages.some(
       (item) => item.code === currentLanguage.value

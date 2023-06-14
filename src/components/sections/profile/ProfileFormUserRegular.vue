@@ -4,9 +4,9 @@
       <h1 class="text-2xl mb-6">{{ $t('profile.title') }}</h1>
       <div class="mb-6">
         <h2 class="text-md font-bold mb-2">{{ $t('profile.userInfo.title') }}</h2>
-        <p>{{ $t('profile.userInfo.name') }} {{ user?.displayName ?? '' }}</p>
-        <p>{{ $t('profile.userInfo.email') }} {{ user?.email ?? '' }}</p>
-        <p>{{ $t('profile.userInfo.memberSince') }} {{ user?.joinDate ?? '' }}</p>
+        <p>{{ $t('profile.userInfo.name') }} {{ usersStore.user?.displayName ?? '' }}</p>
+        <p>{{ $t('profile.userInfo.email') }} {{ usersStore.user?.email ?? '' }}</p>
+        <p>{{ $t('profile.userInfo.memberSince') }} {{ usersStore.user?.joinDate ?? '' }}</p>
       </div>
       <div class="mb-6">
         <h2 class="text-md font-bold mb-2">{{ $t('profile.settings.title') }}</h2>
@@ -30,14 +30,16 @@
 </template>
 
 <script setup>
-import { useCurrentUser } from 'vuefire'
-import { useAuthStore } from '@/stores/auth/authStore'
 import { useRouter } from 'vue-router'
+
 import InputLanguage from '../../base/inputs/InputLanguage.vue'
 
+import { useAuthStore } from '@/stores/auth/authStore'
+import { useUsersStore } from '@/stores/users/usersStore'
+
 const router = useRouter()
-const user = useCurrentUser()
 const authStore = useAuthStore()
+const usersStore = useUsersStore()
 
 async function logout() {
   await authStore.logout()

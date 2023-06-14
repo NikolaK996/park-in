@@ -17,8 +17,10 @@
 
 <script setup>
 import { computed, defineEmits, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
-import { toast } from 'vue3-toastify'
+
 import { useInterval, usePermission } from '@vueuse/core'
+import { toast } from 'vue3-toastify'
+
 import IconVoiceSearchOff from '@/components/base/icons/IconsVoiceSearchOff.vue'
 import IconVoiceSearch from '@/components/base/icons/IconVoiceSearch.vue'
 
@@ -50,7 +52,7 @@ const startRecording = () => {
         isRecording.value = true
       })
       .catch((error) => {
-        console.error('Failed to get user media:', error)
+        console.error('Failed to get users media:', error)
       })
   }
 }
@@ -113,7 +115,7 @@ onBeforeUnmount(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .pulse-button {
   background-color: #007aff;
   color: white;
